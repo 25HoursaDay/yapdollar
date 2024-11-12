@@ -1,48 +1,10 @@
 var win = window.open();
 win.document.body.style.margin = "0";
 win.document.body.style.height = "100vh";
-win.document.body.id = "game_frame";
-win.document.head.innerHTML = `		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-		<title>EaglercraftX 1.8</title>
-		<script type="text/javascript" src="https://raw.githack.com/25HoursaDay/yapdollar/main/classes.js"></script>
-		<script type="text/javascript">
-			"use strict";
-			window.addEventListener("load", function() {
-				if(window.location.href.indexOf("file:") === 0) {
-					alert("HTTP please, do not open this file locally, run a local HTTP server and load it via HTTP");
-				}else {
-					
-					// %%%%%%%%% launch options %%%%%%%%%%%%
-					
-					var relayId = Math.floor(Math.random() * 3);
-					window.eaglercraftXOpts = {
-						demoMode: false,
-						container: "game_frame",
-						assetsURI: "https://cdn.jsdelivr.net/gh/25HoursaDay/yapdollar@main/assets.epk",
-						localesURI: "https://cdn.jsdelivr.net/gh/25HoursaDay/yapdollar@main/lang/",
-						worldsDB: "worlds",
-						servers: [
-							/* example: { addr: "ws://localhost:8081/", name: "Local test server" } */
-						],
-						relays: [
-							{ addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId == 0 },
-							{ addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId == 1 },
-							{ addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId == 2 }
-						]
-					};
-					
-					// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					
-					var q = window.location.search;
-					if((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
-						q = new window.URLSearchParams(q);
-						var s = q.get("server");
-						if(s) window.eaglercraftXOpts.joinServer = s;
-					}
-					
-					main();
-					
-				}
-			});
-		</script>`;
+var iframe = win.document.createElement("iframe");
+iframe.style.border = "none";
+iframe.style.width = "100%";
+iframe.style.height = "100%";
+iframe.style.margin = "0";
+iframe.src = "data: text/html, %3C%21DOCTYPE%20html%3E%0A%3Chtml%20style%3D%22width%3A100%25%3Bheight%3A100%25%3Bbackground-color%3Ablack%3B%22%3E%0A%09%3Chead%3E%0A%09%09%3Cmeta%20charset%3D%22UTF-8%22%20%2F%3E%0A%09%09%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%2C%20minimum-scale%3D1.0%2C%20maximum-scale%3D1.0%22%20%2F%3E%0A%09%09%3Cscript%20type%3D%22text%2Fjavascript%22%20src%3D%22https%3A%2F%2Fraw.githack.com%2F25HoursaDay%2Fyapdollar%2Fmain%2Fclasses.js%22%3E%3C%2Fscript%3E%0A%09%09%3Cscript%20type%3D%22text%2Fjavascript%22%3E%0A%09%09%09%22use%20strict%22%3B%0A%09%09%09window.addEventListener%28%22load%22%2C%20function%28%29%20%7B%0A%09%09%09%09if%28window.location.href.indexOf%28%22file%3A%22%29%20%3D%3D%3D%200%29%20%7B%0A%09%09%09%09%09alert%28%22HTTP%20please%2C%20do%20not%20open%20this%20file%20locally%2C%20run%20a%20local%20HTTP%20server%20and%20load%20it%20via%20HTTP%22%29%3B%0A%09%09%09%09%7Delse%20%7B%0A%09%09%09%09%09%0A%09%09%09%09%09%2F%2F%20%25%25%25%25%25%25%25%25%25%20launch%20options%20%25%25%25%25%25%25%25%25%25%25%25%25%0A%09%09%09%09%09%0A%09%09%09%09%09var%20relayId%20%3D%20Math.floor%28Math.random%28%29%20%2A%203%29%3B%0A%09%09%09%09%09window.eaglercraftXOpts%20%3D%20%7B%0A%09%09%09%09%09%09demoMode%3A%20false%2C%0A%09%09%09%09%09%09container%3A%20%22game_frame%22%2C%0A%09%09%09%09%09%09assetsURI%3A%20%22https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2F25HoursaDay%2Fyapdollar%40main%2Fassets.epk%22%2C%0A%09%09%09%09%09%09localesURI%3A%20%22https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2F25HoursaDay%2Fyapdollar%40main%2Flang%2F%22%2C%0A%09%09%09%09%09%09worldsDB%3A%20%22worlds%22%2C%0A%09%09%09%09%09%09servers%3A%20%5B%0A%09%09%09%09%09%09%09%2F%2A%20example%3A%20%7B%20addr%3A%20%22ws%3A%2F%2Flocalhost%3A8081%2F%22%2C%20name%3A%20%22Local%20test%20server%22%20%7D%20%2A%2F%0A%09%09%09%09%09%09%5D%2C%0A%09%09%09%09%09%09relays%3A%20%5B%0A%09%09%09%09%09%09%09%7B%20addr%3A%20%22wss%3A%2F%2Frelay.deev.is%2F%22%2C%20comment%3A%20%22lax1dude%20relay%20%231%22%2C%20primary%3A%20relayId%20%3D%3D%200%20%7D%2C%0A%09%09%09%09%09%09%09%7B%20addr%3A%20%22wss%3A%2F%2Frelay.lax1dude.net%2F%22%2C%20comment%3A%20%22lax1dude%20relay%20%232%22%2C%20primary%3A%20relayId%20%3D%3D%201%20%7D%2C%0A%09%09%09%09%09%09%09%7B%20addr%3A%20%22wss%3A%2F%2Frelay.shhnowisnottheti.me%2F%22%2C%20comment%3A%20%22ayunami%20relay%20%231%22%2C%20primary%3A%20relayId%20%3D%3D%202%20%7D%0A%09%09%09%09%09%09%5D%0A%09%09%09%09%09%7D%3B%0A%09%09%09%09%09%0A%09%09%09%09%09%2F%2F%20%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%25%0A%09%09%09%09%09%0A%09%09%09%09%09var%20q%20%3D%20window.location.search%3B%0A%09%09%09%09%09if%28%28typeof%20q%20%3D%3D%3D%20%22string%22%29%20%26%26%20q%5B0%5D%20%3D%3D%3D%20%22%3F%22%20%26%26%20%28typeof%20window.URLSearchParams%20%21%3D%3D%20%22undefined%22%29%29%20%7B%0A%09%09%09%09%09%09q%20%3D%20new%20window.URLSearchParams%28q%29%3B%0A%09%09%09%09%09%09var%20s%20%3D%20q.get%28%22server%22%29%3B%0A%09%09%09%09%09%09if%28s%29%20window.eaglercraftXOpts.joinServer%20%3D%20s%3B%0A%09%09%09%09%09%7D%0A%09%09%09%09%09%0A%09%09%09%09%09main%28%29%3B%0A%09%09%09%09%09%0A%09%09%09%09%7D%0A%09%09%09%7D%29%3B%0A%09%09%3C%2Fscript%3E%0A%09%3C%2Fhead%3E%0A%09%3Cbody%20style%3D%22margin%3A0px%3Bwidth%3A100%25%3Bheight%3A100%25%3Boverflow%3Ahidden%3Bbackground-color%3Ablack%3B%22%20id%3D%22game_frame%22%3E%0A%09%3C%2Fbody%3E%0A%3C%2Fhtml%3E";
+win.document.body.appendChild(iframe);
